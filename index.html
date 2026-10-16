@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#0a0711" />
+  <title>秘境回响 · 塔罗仪式</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main id="app">
+    <div class="stars" aria-hidden="true"></div>
+
+    <section class="screen active" id="welcome">
+      <div class="brand-mark"><span>✦</span><i></i><b>☾</b></div>
+      <p class="eyebrow">ARCANA · INNER ORACLE</p>
+      <h1>秘境回响</h1>
+      <p class="subtitle">把问题交给夜色，把答案留给自己</p>
+      <div class="moon-orbit"><div class="moon">☽</div></div>
+      <button class="primary" data-go="question">开始一次占卜</button>
+      <button class="ghost" id="historyBtn">过往回响 <span id="historyCount">0</span></button>
+    </section>
+
+    <section class="screen" id="question">
+      <header><button class="back" data-go="welcome">‹</button><span>01 · 提问</span><i></i></header>
+      <div class="content top">
+        <p class="eyebrow">SET YOUR INTENTION</p>
+        <h2>此刻，你想询问什么？</h2>
+        <div class="question-box">
+          <textarea id="questionInput" maxlength="120" placeholder="例如：我该如何看待最近工作中的迷茫？"></textarea>
+          <button id="voiceBtn" class="voice" aria-label="语音输入">◉</button>
+        </div>
+        <p class="hint">尽量使用开放式问题，让牌面提供更多启发。</p>
+        <div class="chips">
+          <button>我现在最需要关注什么？</button>
+          <button>这段关系带给我什么功课？</button>
+          <button>我该如何面对当前的选择？</button>
+        </div>
+        <h3>选择牌阵</h3>
+        <div class="spread-options">
+          <button class="spread selected" data-spread="single"><span class="mini-card"></span><strong>一张牌</strong><small>此刻的指引</small></button>
+          <button class="spread" data-spread="three"><span class="mini-three"><i></i><i></i><i></i></span><strong>三张牌</strong><small>过去 · 现在 · 未来</small></button>
+        </div>
+      </div>
+      <button class="primary bottom-action" id="toShuffle">进入洗牌仪式</button>
+    </section>
+
+    <section class="screen" id="shuffle">
+      <div class="scattered-cards" id="shuffleField" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i>
+      </div>
+      <header><button class="back" data-go="question">‹</button><span>02 · 洗牌</span><i></i></header>
+      <div class="content ritual-center">
+        <p class="eyebrow">CLEAR YOUR MIND</p>
+        <h2>在心中默念你的问题</h2>
+        <p class="hint">轻点自动小洗 · 左右滑动自动大洗</p>
+        <div id="deck" class="deck" aria-label="塔罗牌堆">
+          <div class="deck-card c4"></div><div class="deck-card c3"></div><div class="deck-card c2"></div>
+          <div class="deck-card c1"><div class="card-back"><span>☽</span><i></i><b>✦</b></div></div>
+        </div>
+        <div class="shuffle-meter"><i id="shuffleProgress"></i></div>
+        <p id="shuffleText" class="status">牌正在等待你的触碰</p>
+      </div>
+      <button class="primary bottom-action" id="finishShuffle" disabled>完成洗牌</button>
+    </section>
+
+    <section class="screen" id="circle">
+      <header><button class="back" data-go="shuffle">‹</button><span id="drawStep">03 · 抽牌</span><button id="soundToggle" class="sound">♪</button></header>
+      <div class="content circle-content">
+        <p class="eyebrow">FOLLOW YOUR INTUITION</p>
+        <h2 id="positionTitle">选择一张回应你的牌</h2>
+        <p class="hint">左右滑动牌圈 · 上下滑动中央牌抽取</p>
+        <div id="cardRing" class="card-ring"></div>
+        <div class="focus-glow"></div>
+        <p class="draw-hint"><span>↕</span> 向上或向下抽出</p>
+      </div>
+    </section>
+
+    <section class="screen" id="reveal">
+      <header><button class="back hidden">‹</button><span>04 · 启示</span><i></i></header>
+      <div class="content reveal-content">
+        <p id="revealPosition" class="eyebrow">此刻的指引</p>
+        <div id="revealCard" class="reveal-card">
+          <div class="reveal-inner">
+            <div class="face back-face"><div class="card-back"><span>☽</span><i></i><b>✦</b></div></div>
+            <div class="face front-face"><div class="tarot-art"><span id="cardSymbol">☀</span></div><strong id="cardName">太阳</strong><small id="cardNumber">XIX · THE SUN</small></div>
+          </div>
+        </div>
+        <p id="flipHint" class="hint pulse">轻触牌面，揭开启示</p>
+        <div id="reading" class="reading hidden-reading"></div>
+        <div id="oracle" class="oracle hidden">
+          <button id="crystalBall" class="crystal-ball" aria-label="继续与水晶球对话"><span></span><i>✦</i></button>
+          <button id="oraclePrompt" class="oracle-prompt">还想说点什么...</button>
+          <div id="oracleChat" class="oracle-chat hidden">
+            <div id="oracleMessages" class="oracle-messages"></div>
+            <div class="oracle-input"><textarea id="oracleInput" maxlength="180" placeholder="写下你的疑问或感受..."></textarea><button id="oracleSend" aria-label="发送">↑</button></div>
+          </div>
+        </div>
+      </div>
+      <button class="primary bottom-action hidden" id="nextCard">抽取下一张</button>
+      <button class="primary bottom-action hidden" id="saveReading">保存这次回响</button>
+    </section>
+  </main>
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
